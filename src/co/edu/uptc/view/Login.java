@@ -108,7 +108,8 @@ public class Login extends JFrame {
                     break;
                 case "Recepcionist":
                     JOptionPane.showMessageDialog(this, "Bienvenido recepcionista.");
-                    // new RecepcionistMenu().setVisible(true);
+                    new ReceptionistMenu();
+                    dispose();
                     break;
                 default:
                     JOptionPane.showMessageDialog(this, "Usuario válido, pero tipo no identificado.");

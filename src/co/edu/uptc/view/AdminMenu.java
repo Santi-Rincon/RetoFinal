@@ -68,22 +68,20 @@ public class AdminMenu extends JFrame {
         add(panel, BorderLayout.CENTER);
         setVisible(true);
 
-        
-        registrarParqueadero.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Abrir ventana para registrar parqueadero"));
+        registrarParqueadero.addActionListener(
+                e -> JOptionPane.showMessageDialog(this, "Abrir ventana para registrar parqueadero"));
 
-                crearRecepcionista.addActionListener(e -> {
-                    new CreateReceptionist(); // Abre la ventana de creación
-                    dispose(); // Cierra el menú del admin
-                });
-                
-                
+        crearRecepcionista.addActionListener(e -> {
+            new CreateReceptionist(); // Abre la ventana de creación
+            dispose(); // Cierra el menú del admin
+        });
 
-        editarRecepcionista.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Editar datos de recepcionista"));
+        editarRecepcionista.addActionListener(e -> {
+            dispose(); // Cierra el menú del admin
+            new ModifyReceptionist(); // Abre la ventana de creación
+        });
 
-        generarReporte.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Generando reporte..."));
+        generarReporte.addActionListener(e -> JOptionPane.showMessageDialog(this, "Generando reporte..."));
 
         cerrarSesion.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Cerrando sesión...");
