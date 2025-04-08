@@ -5,42 +5,80 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class User {
-    protected String user;
+    protected String username;
     protected String password;
-    private List<User> usuariosRegistrados = new ArrayList<>();
+    private static List<User> registeredUsers = new ArrayList<>();
 
-    public User(String user, String password) {
-        this.user = user;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
-        usuariosRegistrados.add(this);
-        showUsers();
-    }
 
-    public void showUsers() {
-        StringBuilder sb = new StringBuilder("Usuarios registrados:\n");
-        for (User us : usuariosRegistrados) {
-            sb.append(us.user).append("\n");
+        // Verificar si el usuario ya existe antes de registrarlo
+        if (!userExists(username)) {
+            registeredUsers.add(this);
+        } else {
+            JOptionPane.showMessageDialog(null, "The username '" + username + "' already exists.");
         }
-        JOptionPane.showMessageDialog(null, sb.toString());
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public boolean iniciarSesion(String usuario, String contraseña) {
-        for (User us : usuariosRegistrados) {
-            if (us.user.equals(usuario) && us.password.equals(contraseña)) {
+    
+    public static boolean userExists(String username) {
+        for (User u : registeredUsers) {
+            if (u.username.equalsIgnoreCase(username)) {
                 return true;
             }
         }
-        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
         return false;
     }
 
-    public void cerrarSesion() {
-        JOptionPane.showMessageDialog(null, "Sesión cerrada para el usuario: " + user);
-    }
     
+    public static String getUserType(String username) {
+        for (User u : registeredUsers) {
+            if (u.username.equalsIgnoreCase(username)) {
+                return u.getClass().getSimpleName(); 
+            }
+        }
+        return "Not found";
+    }
 
+    
+    public static boolean login(String username, String password) {
+        for (User u : registeredUsers) {
+            if (u.username.equals(username) && u.password.equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    
+    public void logout() {
+        JOptionPane.showMessageDialog(null, "Session closed for user: " + username);
+    }
+
+    // Getters y setters
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<User> getRegisteredUsers() {
+        return this.registeredUsers;
+    }
+
+    public void setRegisteredUsers(List<User> registeredUsers) {
+        this.registeredUsers = registeredUsers;
+    }
 }

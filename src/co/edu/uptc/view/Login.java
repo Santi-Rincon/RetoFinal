@@ -4,9 +4,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import co.edu.uptc.presenter.Presenter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,14 +22,15 @@ import java.awt.Insets;
 
 public class Login extends JFrame {
 
-    public Login() {
-        super();
-        JFrame frame = new JFrame("Login");
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+    private JTextField usernameField;
+    private JPasswordField passwordField;
 
+    public Login() {
+        super("Login");
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
 
         // Panel superior (título)
         JPanel titlePanel = new JPanel(new BorderLayout());
@@ -36,60 +41,78 @@ public class Login extends JFrame {
         titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         titleLabel.setPreferredSize(new Dimension(0, 80));
         titlePanel.add(titleLabel, BorderLayout.CENTER);
-        frame.add(titlePanel, BorderLayout.NORTH);
+        add(titlePanel, BorderLayout.NORTH);
 
-        // Panel central que usará GridBagLayout para centrar verticalmente
+        // Panel central con formulario
         JPanel centerPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints centerGbc = new GridBagConstraints();
-        centerGbc.gridx = 1;
-        centerGbc.gridy = 1;
-        centerGbc.anchor = GridBagConstraints.CENTER;
-        centerGbc.weighty = 1.5;
-
-        // Panel del formulario (usuario y contraseña)
-        JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Usuario
+        JPanel formPanel = new JPanel(new GridBagLayout());
+
+        // Campo Usuario
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.weightx = 0;
         formPanel.add(new JLabel("Usuario:"), gbc);
 
+        usernameField = new JTextField(15);
         gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        formPanel.add(new JTextArea(2, 15), gbc);
+        formPanel.add(usernameField, gbc);
 
-        // Contraseña
+        // Campo Contraseña
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weightx = 0;
         formPanel.add(new JLabel("Contraseña:"), gbc);
 
+        passwordField = new JPasswordField(15);
         gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        formPanel.add(new JTextArea(2, 15), gbc);
+        formPanel.add(passwordField, gbc);
 
-        // Añadir el formPanel centrado dentro del centerPanel
-        centerPanel.add(formPanel, centerGbc);
-        frame.add(centerPanel, BorderLayout.CENTER);
+        // Añadir formPanel al centro
+        centerPanel.add(formPanel);
+        add(centerPanel, BorderLayout.CENTER);
 
         // Panel inferior con botón
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 20, 0)); // Margen superior e inferior
-        
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 20, 0));
+
         JButton loginButton = new JButton("Iniciar sesión");
         loginButton.setBackground(Color.LIGHT_GRAY);
         loginButton.setFocusPainted(false);
         bottomPanel.add(loginButton);
-        
-        frame.add(bottomPanel, BorderLayout.SOUTH);
-        
-        // Mostrar
-        frame.setVisible(true);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Acción del botón de login
+        loginButton.addActionListener(e -> {
+            String username = usernameField.getText().trim();
+            String password = new String(passwordField.getPassword());
+
+            Presenter presenter = Presenter.getInstance();
+
+            if (presenter.login(username, password)) {
+                String userType = presenter.getUserType(username);
+
+                switch (userType) {
+                    case "Admin":
+                        JOptionPane.showMessageDialog(this, "Bienvenido administrador.");
+                            new AdminMenu();
+                        break;
+                    case "Recepcionist":
+                        JOptionPane.showMessageDialog(this, "Bienvenido recepcionista.");
+                        // Aquí iría: new RecepcionistMenu().setVisible(true);
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(this, "Usuario válido, pero tipo no identificado.");
+                        break;
+                }
+
+                dispose(); // Cerrar login
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+            }
+        });
+
+        setVisible(true);
     }
-
-
 }

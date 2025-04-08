@@ -15,7 +15,7 @@ public class Admin extends User {
 
     public void crearRecepcionista(String usuario, String contraseña, String nombres, String apellidos) {
         User recepcionist = new Recepcionist(usuario, contraseña, nombres, apellidos);
-        JOptionPane.showMessageDialog(null, "Recepcionista registrado: " + recepcionist.getUser());
+        JOptionPane.showMessageDialog(null, "Recepcionista registrado: " + recepcionist.getUsername());
     }
 
     public void cambiarCredencialesRecepcionista(String usuario, String nuevaContraseña) {
