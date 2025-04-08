@@ -4,77 +4,77 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Ticket {
-    private LocalDateTime horaEntrada;
-    private LocalDateTime horaSalida;
-    private String recepcionista;
-    private String placa;
-    private double valor;
+    private LocalDateTime entryTime;
+    private LocalDateTime departureTime;
+    private String recepcionist;
+    private String plate;
+    private double value;
     private static final double TARIFA_HORA = 2000;
     
 
-    public Ticket(LocalDateTime horaEntrada, String recepcionista, String placa) {
-        this.horaEntrada = horaEntrada;
-        this.horaSalida = null;
-        this.placa = placa;
+    public Ticket(LocalDateTime entryTime, String recepcionist, String plate) {
+        this.entryTime = entryTime;
+        this.departureTime = null;
+        this.plate = plate;
     }
 
-	public void registrarSalida(){
-        this.horaSalida = LocalDateTime.now();
+	public void checkOut(){
+        this.departureTime = LocalDateTime.now();
     }
 
-    public double calcularTotalPago(){
-        valor = 0;
-        if (horaSalida == null) {
+    public double calculateTotalPayment(){
+        value = 0;
+        if (departureTime == null) {
             throw new IllegalStateException("El vehículo aún no ha salido.");
         }
         // Calcular la duración en minutos
-        long minutosEstacionado = Duration.between(horaEntrada, horaSalida).toMinutes();
+        long minutesParked = Duration.between(entryTime, departureTime).toMinutes();
 
         // Redondear al alza cada fracción de hora
-        long horas = (minutosEstacionado + 59) / 60; 
+        long hours = (minutesParked + 59) / 60; 
 
-        return valor = horas * TARIFA_HORA;
+        return value = hours * TARIFA_HORA;
     }
 
-    public double calcularCambio(double dineroRecibido){
-        double total = calcularTotalPago();
-        if (dineroRecibido < total) {
+    public double calculateChange(double moneyReceived){
+        double total = calculateTotalPayment();
+        if (moneyReceived < total) {
             throw new IllegalArgumentException("El dinero recibido es insuficiente.");
         }
-        return dineroRecibido - total;
+        return moneyReceived - total;
     }
 
 
-    public LocalDateTime getHoraEntrada() {
-        return horaEntrada;
+    public LocalDateTime getEntryTime() {
+        return entryTime;
     }
 
-    public void setHoraEntrada(LocalDateTime horaEntrada) {
-        this.horaEntrada = horaEntrada;
+    public void setEntryTime(LocalDateTime entryTime) {
+        this.entryTime = entryTime;
     }
 
-    public LocalDateTime getHoraSalida() {
-        return horaSalida;
+    public LocalDateTime getDepartureTime() {
+        return departureTime;
     }
 
-    public void setHoraSalida(LocalDateTime horaSalida) {
-        this.horaSalida = horaSalida;
+    public void setDepartureTime(LocalDateTime departureTime) {
+        this.departureTime = departureTime;
     }
 
-    public String getRecepcionista() {
-        return recepcionista;
+    public String getRecepcionist() {
+        return recepcionist;
     }
 
-    public String getPlaca() {
-        return placa;
+    public String getPlate() {
+        return plate;
     }
 
-    public double getValor() {
-        return valor;
+    public double getValue() {
+        return value;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setValue(double valor) {
+        this.value = valor;
     }
 
 }

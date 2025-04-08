@@ -4,40 +4,40 @@ import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 
 public class Recepcionist extends User {
-    private String nombres;
-    private String apellidos;
-    private String telofono;
-    private String direccion;   
+    private String name;
+    private String lastname;
+    private String phone;
+    private String address;   
     private String email;
 
-    public Recepcionist(String usuario, String nombres, String apellidos, String telofono, String direccion,String email, String contraseña) {
-        super(usuario, contraseña);
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.telofono = telofono;
-        this.direccion = direccion; 
+    public Recepcionist(String user, String name, String lastname, String phone, String address,String email, String password) {
+        super(user, password);
+        this.name = name;
+        this.lastname = lastname;
+        this.phone = phone;
+        this.address = address; 
         this.email = email; 
 
     }
 
-    public String nombreCompleto(){
-        return nombres + " " + apellidos;
+    public String fullName(){
+        return name + " " + lastname;
     }
 
-    public void registrarIngresoVehiculo(Parking parqueadero, String placa, LocalDateTime horaIngreso) {
-        Ticket ticket = new Ticket(horaIngreso, this.nombreCompleto(), placa);
-        parqueadero.agregarTicket(ticket);
+    public void registerVehicleEntry(Parking parking, String plate, LocalDateTime entryTime) {
+        Ticket ticket = new Ticket(entryTime, this.fullName(), plate);
+        parking.addTicket(ticket);
     }
 
-    public void registrarSalidaVehiculo(Parking parqueadero, String placa, LocalDateTime horaSalida, double pago) {
-        Ticket ticket = new Ticket(horaSalida, this.nombreCompleto(), placa);
-        parqueadero.registrarSalida(placa, horaSalida, pago);
+    public void registerVehicleDeparture(Parking parking, String plate, LocalDateTime departureTime, double payment) {
+        Ticket ticket = new Ticket(departureTime, this.fullName(), plate);
+        parking.checkOut(plate, departureTime, payment);
     }
 
-    public void mostrarEspaciosDisponibles(Parking parqueadero) {
-        int espaciosDisponibles = parqueadero.getEspaciosDisponibles();
-        JOptionPane.showMessageDialog(null, "Espacios disponibles: " + espaciosDisponibles);
-        if (espaciosDisponibles <= 5) {
+    public void showAvailableSpaces(Parking parking) {
+        int availableSpaces = parking.getEspaciosDisponibles();
+        JOptionPane.showMessageDialog(null, "Espacios disponibles: " + availableSpaces);
+        if (availableSpaces <= 5) {
             JOptionPane.showMessageDialog(null, "Quedan pocos espacios disponibles", "Alerta", JOptionPane.WARNING_MESSAGE);
         }
     }

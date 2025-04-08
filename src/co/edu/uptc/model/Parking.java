@@ -18,67 +18,67 @@ public class Parking {
     private Map<String, Ticket> parkedVehicles = new HashMap<>();
     private Recepcionist recepcionist;
 
-    public Parking(String nombre, String direccion, int totalEspacios, Schedule[] horario) {
-        this.name = nombre;
-        this.address = direccion;
-        this.totalSpaces = totalEspacios;
-        this.schedule = horario;
+    public Parking(String name, String address, int totalSpaces, Schedule[] schedule) {
+        this.name = name;
+        this.address = address;
+        this.totalSpaces = totalSpaces;
+        this.schedule = schedule;
     }
 
-    public String crearHorarios() {
-        Schedule[] horarios = new Schedule[3];
-        horarios[0] = new Schedule("Lunes a Viernes", "08:00", "18:00");
-        horarios[1] = new Schedule("Sábado", "08:00", "12:00");
-        horarios[2] = new Schedule("Domingos y festivos", "08:00", "18:00");
+    public String createSchedules() {
+        Schedule[] schedules = new Schedule[3];
+        schedules[0] = new Schedule("Lunes a Viernes", "08:00", "18:00");
+        schedules[1] = new Schedule("Sábado", "08:00", "12:00");
+        schedules[2] = new Schedule("Domingos y festivos", "08:00", "18:00");
 
-        return horarios.toString();
+        return schedules.toString();
     }
 
     public int getEspaciosDisponibles() {
         return totalSpaces - occupiedSpaces;
     }
 
-    public void agregarTicket(Ticket ticket) {
-        tickets.add(new Ticket(LocalDateTime.now(), recepcionist.nombreCompleto(), ticket.getPlaca()));
-        parkedVehicles.put(ticket.getPlaca(), ticket);
+    public void addTicket(Ticket ticket) {
+        tickets.add(new Ticket(LocalDateTime.now(), recepcionist.fullName(), ticket.getPlate()));
+        parkedVehicles.put(ticket.getPlate(), ticket);
         occupiedSpaces++;
     }
 
-    public void registrarSalida(String placa, LocalDateTime horaSalida, double pago) {
-        if (parkedVehicles.containsKey(placa)) {
-            Ticket ticket = parkedVehicles.get(placa);
-            ticket.registrarSalida();
-            ticket.calcularTotalPago();
-            ticket.calcularCambio(pago);
+    public void checkOut(String plate, LocalDateTime departureTime, double payment) {
+        if (parkedVehicles.containsKey(plate)) {
+            Ticket ticket = parkedVehicles.get(plate);
+            ticket.checkOut();
+            ticket.calculateTotalPayment();
+            ticket.calculateChange(payment);
         }
 
-        parkedVehicles.remove(placa);
+        parkedVehicles.remove(plate);
         occupiedSpaces--;
     }
 
-    public void generarReporteVentas(LocalDate fecha) {
-        double totalIngresos = 0;
-        int totalVehiculos = 0;
-        Map<String, Double[]> recepcionistas = new HashMap<>();
+    public void generateSalesReport(LocalDate date) {
+        double totalIncome = 0;
+        int totalVehicles = 0;
+        Map<String, Double[]> recepcionists = new HashMap<>();
 
         for (Ticket ticket : tickets) {
-            if (ticket.getHoraEntrada().toLocalDate().equals(fecha)) {
-                totalIngresos += ticket.getValor();
-                totalVehiculos++;
+            if (ticket.getEntryTime().toLocalDate().equals(date)) {
+                totalIncome += ticket.getValue();
+                totalVehicles++;
 
-                String recepcionista = ticket.getRecepcionista();
-                recepcionistas.putIfAbsent(recepcionista, new Double[] { 0.0, 0.0 });
-                recepcionistas.get(recepcionista)[0] += ticket.getValor();
-                recepcionistas.get(recepcionista)[1]++;
+                String recepcionist = ticket.getRecepcionist();
+                recepcionists.putIfAbsent(recepcionist, new Double[] { 0.0, 0.0 });
+                recepcionists.get(recepcionist)[0] += ticket.getValue();
+                recepcionists.get(recepcionist)[1]++;
             }
         }
 
-        JOptionPane.showMessageDialog(null, "Reporte de ventas del " + fecha + "\n" +
-                "Total ingresos: " + totalIngresos + "\n" +
-                "Total vehículos: " + totalVehiculos + "\n" +
+        JOptionPane.showMessageDialog(null, "Reporte de ventas del " + date + "\n" +
+                "Total ingresos: " + totalIncome + "\n" +
+                "Total vehículos: " + totalVehicles + "\n" +
                 "Detalles por recepcionista: ");
 
-        for (Map.Entry<String, Double[]> entry : recepcionistas.entrySet()) {
+        for (Map.Entry<String, Double[]> entry : recepcionists.entrySet()) {
             JOptionPane.showMessageDialog(null, "Recepcionista: " + entry.getKey() + "\n" +
                     "Total Ingresos: " + entry.getValue()[0] + "\n" +
                     "Número de vehículos: " + entry.getValue()[1].intValue());
