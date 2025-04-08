@@ -1,12 +1,12 @@
 package co.edu.uptc.model;
 
-public class Horario {
+public class Schedule {
     private String days;
     private String initialTime;
     private String finalTime;
 
     
-    public Horario(String days, String initialTime, String finalTime) {
+    public Schedule(String days, String initialTime, String finalTime) {
         this.days = days;
         this.initialTime = initialTime;
         this.finalTime = finalTime;
