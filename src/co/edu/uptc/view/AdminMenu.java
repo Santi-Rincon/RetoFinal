@@ -4,16 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
+import java.awt.Insets;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import java.awt.Insets;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class AdminMenu extends JFrame {
 
@@ -69,7 +68,7 @@ public class AdminMenu extends JFrame {
         add(panel, BorderLayout.CENTER);
         setVisible(true);
 
-        // 🧠 ACCIONES
+        
         registrarParqueadero.addActionListener(e ->
                 JOptionPane.showMessageDialog(this, "Abrir ventana para registrar parqueadero"));
 
