@@ -12,6 +12,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.Insets;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 public class AdminMenu extends JFrame {
 
@@ -21,37 +23,37 @@ public class AdminMenu extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-    
+
         // Crear barra de menú
         JMenuBar menuBar = new JMenuBar();
-        // Elimina o ajusta esta línea ↓
-        // menuBar.setPreferredSize(new Dimension(5, 20)); ❌
-    
-        // Menús
-        JMenu menuIngreso = new JMenu("Registrar Parqueadero");
-        JMenu menuSalida = new JMenu("Crear Recepcionista");
-        JMenu menuEspacios = new JMenu("Editar Recepcionista");
-        JMenu generateReport = new JMenu("Generar Reporte");
-        JMenu menuCerrar = new JMenu("Cerrar Sesión");
-    
-        // Fuente más grande
-        Font menuFont = new Font("Arial", Font.PLAIN, 16);
-        menuIngreso.setFont(menuFont);
-        menuSalida.setFont(menuFont);
-        menuEspacios.setFont(menuFont);
-        generateReport.setFont(menuFont);
-        menuCerrar.setFont(menuFont);
-    
+
+        // Crear menús y submenús (JMenuItem)
+        JMenu menuIngreso = new JMenu("Parqueadero");
+        JMenuItem registrarParqueadero = new JMenuItem("Registrar Parqueadero");
+        menuIngreso.add(registrarParqueadero);
+
+        JMenu menuRecepcionista = new JMenu("Recepcionistas");
+        JMenuItem crearRecepcionista = new JMenuItem("Crear Recepcionista");
+        JMenuItem editarRecepcionista = new JMenuItem("Editar Recepcionista");
+        menuRecepcionista.add(crearRecepcionista);
+        menuRecepcionista.add(editarRecepcionista);
+
+        JMenu generateReport = new JMenu("Reportes");
+        JMenuItem generarReporte = new JMenuItem("Generar Reporte");
+        generateReport.add(generarReporte);
+
+        JMenu menuCerrar = new JMenu("Cuenta");
+        JMenuItem cerrarSesion = new JMenuItem("Cerrar Sesión");
+        menuCerrar.add(cerrarSesion);
+
         // Agregar menús a la barra
         menuBar.add(menuIngreso);
-        menuBar.add(menuSalida);
-        menuBar.add(menuEspacios);
+        menuBar.add(menuRecepcionista);
         menuBar.add(generateReport);
         menuBar.add(menuCerrar);
-    
-        setJMenuBar(menuBar); // Usa directamente setJMenuBar
-        // Ya no necesitas el JPanel extra para el menú
-    
+
+        setJMenuBar(menuBar);
+
         // Panel central con mensaje
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -59,12 +61,35 @@ public class AdminMenu extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-    
+
         JLabel label = new JLabel("Seleccione una opción en el menú", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 16));
         panel.add(label, gbc);
-    
+
         add(panel, BorderLayout.CENTER);
         setVisible(true);
+
+        // 🧠 ACCIONES
+        registrarParqueadero.addActionListener(e ->
+                JOptionPane.showMessageDialog(this, "Abrir ventana para registrar parqueadero"));
+
+                crearRecepcionista.addActionListener(e -> {
+                    new CreateReceptionist(); // Abre la ventana de creación
+                    dispose(); // Cierra el menú del admin
+                });
+                
+                
+
+        editarRecepcionista.addActionListener(e ->
+                JOptionPane.showMessageDialog(this, "Editar datos de recepcionista"));
+
+        generarReporte.addActionListener(e ->
+                JOptionPane.showMessageDialog(this, "Generando reporte..."));
+
+        cerrarSesion.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "Cerrando sesión...");
+            dispose(); // Cierra el menú del admin
+            new Login(); // Vuelve a mostrar el login
+        });
     }
 }
