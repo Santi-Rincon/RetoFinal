@@ -1,24 +1,11 @@
 package co.edu.uptc.view;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import co.edu.uptc.presenter.Presenter;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 public class Login extends JFrame {
 
@@ -50,7 +37,7 @@ public class Login extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-  
+        // Campo Usuario
         gbc.gridx = 0;
         gbc.gridy = 0;
         centerPanel.add(new JLabel("Usuario:"), gbc);
@@ -59,7 +46,7 @@ public class Login extends JFrame {
         gbc.gridx = 1;
         centerPanel.add(usernameField, gbc);
 
-
+        // Campo Contraseña
         gbc.gridx = 0;
         gbc.gridy = 1;
         centerPanel.add(new JLabel("Contraseña:"), gbc);
@@ -128,12 +115,9 @@ public class Login extends JFrame {
                     break;
             }
 
-                dispose(); // Cerrar login
-            } else {
-                JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
-            }
-        });
-
-        setVisible(true);
+            dispose(); // Cerrar login
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+        }
     }
 }
