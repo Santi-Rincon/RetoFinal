@@ -11,17 +11,17 @@ public class Admin extends User {
         super(user, password);
     }
     
-    public void registrarParqueadero(String nombre, String direccion, int totalEspacios, Schedule[] horario) {
-        Parking parking = new Parking(nombre, direccion, totalEspacios, horario);
-        JOptionPane.showMessageDialog(null, "Parqueadero registrado: " + nombre);
+    public void registerParking(String name, String address, int totalSpaces, Schedule[] schedule) {
+        Parking parking = new Parking(name, address, totalSpaces, schedule);
+        JOptionPane.showMessageDialog(null, "Parqueadero registrado: " + name);
     }
 
-    public void crearRecepcionista(String usuario, String nombres, String apellidos, String telofono, String direccion,String email, String contraseña) {
-        User recepcionist = new Recepcionist(usuario,nombres, apellidos, telofono, direccion, email, contraseña);
+    public void createRecepcionist(String user, String name, String lastname, String phone, String address,String email, String password) {
+        User recepcionist = new Recepcionist(user,name, lastname, phone, address, email, password);
         JOptionPane.showMessageDialog(null, "Recepcionista registrado: " + recepcionist.getUsername());
     }
 
-    public void cambiarCredencialesRecepcionista(String usuario, String nuevaContraseña) {
+    public void changeRecepcionistCredentials(String user, String newPassword) {
         JOptionPane.showMessageDialog(null, "Credenciales cambiadas");
     }
 

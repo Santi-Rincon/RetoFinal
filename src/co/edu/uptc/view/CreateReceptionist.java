@@ -1,9 +1,9 @@
 package co.edu.uptc.view;
 
+import co.edu.uptc.presenter.Presenter;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import co.edu.uptc.presenter.Presenter;
 
 public class CreateReceptionist extends JFrame {
 
@@ -95,7 +95,7 @@ public class CreateReceptionist extends JFrame {
                 String email = emailField.getText();
                 String contraseña = new String(passwordField.getPassword());
 
-                boolean creado = presenter.crearRecepcionista(usuario, nombres, apellidos, telefono, direccion, email, contraseña);
+                boolean creado = presenter.createRecepcionist(usuario, nombres, apellidos, telefono, direccion, email, contraseña);
 
                 if (creado) {
                     showConfirmationPane();
