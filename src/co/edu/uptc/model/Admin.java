@@ -4,6 +4,9 @@ import javax.swing.JOptionPane;
 
 public class Admin extends User {
     
+    public Admin(){
+    }
+    
     public Admin(String user, String password) {
         super(user, password);
     }
@@ -13,8 +16,8 @@ public class Admin extends User {
         JOptionPane.showMessageDialog(null, "Parqueadero registrado: " + nombre);
     }
 
-    public void crearRecepcionista(String usuario, String contraseña, String nombres, String apellidos) {
-        User recepcionist = new Recepcionist(usuario, contraseña, nombres, apellidos);
+    public void crearRecepcionista(String usuario, String nombres, String apellidos, String telofono, String direccion,String email, String contraseña) {
+        User recepcionist = new Recepcionist(usuario,nombres, apellidos, telofono, direccion, email, contraseña);
         JOptionPane.showMessageDialog(null, "Recepcionista registrado: " + recepcionist.getUsername());
     }
 

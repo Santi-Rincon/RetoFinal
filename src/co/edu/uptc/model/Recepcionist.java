@@ -6,11 +6,18 @@ import javax.swing.JOptionPane;
 public class Recepcionist extends User {
     private String nombres;
     private String apellidos;
+    private String telofono;
+    private String direccion;   
+    private String email;
 
-    public Recepcionist(String usuario, String contraseña, String nombres, String apellidos) {
+    public Recepcionist(String usuario, String nombres, String apellidos, String telofono, String direccion,String email, String contraseña) {
         super(usuario, contraseña);
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.telofono = telofono;
+        this.direccion = direccion; 
+        this.email = email; 
+
     }
 
     public String nombreCompleto(){

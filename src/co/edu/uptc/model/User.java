@@ -9,6 +9,7 @@ public class User {
     protected String password;
     private static List<User> registeredUsers = new ArrayList<>();
 
+    public User() {}
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -40,7 +41,6 @@ public class User {
         }
         return "Not found";
     }
-
     
     public static boolean login(String username, String password) {
         for (User u : registeredUsers) {
