@@ -33,12 +33,16 @@ public class Presenter {
 
     // Nuevo método que retorna true si el recepcionista fue creado con éxito
     public boolean createRecepcionist(String user, String name, String lastname, String phone,
-                                      String address, String email, String password) {
-        // Validar si ya existe el usuario antes de crearlo
-      
-                                        
-        admin.createRecepcionist(user, name, lastname, phone, address, email, password);
-        return true; // Creación exitosa
-    }
-}
+            String address, String email, String password) {
+        // Validar si el username ya existe
+        if (User.userExists(user)) {
+            System.out.println("El usuario ya existe: " + user);
+            return false;
+        }
 
+        admin.createRecepcionist(user, name, lastname, phone, address, email, password);
+        System.out.println("Recepcionista creado exitosamente: " + user);
+        return true;
+    }
+
+}
