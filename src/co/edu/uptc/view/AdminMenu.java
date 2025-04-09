@@ -68,8 +68,10 @@ public class AdminMenu extends JFrame {
         add(panel, BorderLayout.CENTER);
         setVisible(true);
 
-        registrarParqueadero.addActionListener(
-                e -> JOptionPane.showMessageDialog(this, "Abrir ventana para registrar parqueadero"));
+        registrarParqueadero.addActionListener(e -> {
+            dispose();
+            new RegisterParking();
+        });
 
         crearRecepcionista.addActionListener(e -> {
             new CreateReceptionist(); // Abre la ventana de creación
