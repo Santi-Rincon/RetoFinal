@@ -6,27 +6,30 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import java.awt.Insets;
 
-public class VehicularEntry extends JFrame{
+public class VehicularEntry extends JFrame {
 
     public VehicularEntry() {
         super("Ingreso de Vehículo");
         setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
+
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 5, 10);
         gbc.fill = GridBagConstraints.BOTH;
-    
+
         // Título
         JLabel titleLabel = new JLabel("Ingreso Vehicular", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -36,7 +39,7 @@ public class VehicularEntry extends JFrame{
         gbc.weightx = 1.0;
         gbc.weighty = 0.2;
         panel.add(titleLabel, gbc);
-    
+
         // Campo de placa
         JPanel placaPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         JLabel placaLabel = new JLabel("Placa:");
@@ -44,32 +47,50 @@ public class VehicularEntry extends JFrame{
         placaField.setPreferredSize(new Dimension(150, 25));
         placaPanel.add(placaLabel);
         placaPanel.add(placaField);
-    
+
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.weighty = 0.1;
         gbc.anchor = GridBagConstraints.CENTER;
         panel.add(placaPanel, gbc);
-    
+
         // Panel para los botones
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10)); // Espacio horizontal entre botones
-    
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+
         JButton btnAceptar = new JButton("Aceptar");
         btnAceptar.setBackground(Color.LIGHT_GRAY);
-    
+
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(Color.LIGHT_GRAY);
-    
+
+        // Acción del botón Cancelar
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Cierra esta ventana
+                new ReceptionistMenu(); // Abre el menú del recepcionista
+            }
+        });
+
+        btnAceptar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Cierra esta ventana
+                new GenerateTicket
+                (); // Abre el menú del recepcionista
+            }
+        });
+
         buttonPanel.add(btnAceptar);
         buttonPanel.add(btnCancelar);
-    
+
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.weighty = 0.2;
         panel.add(buttonPanel, gbc);
-    
+
         add(panel);
         setVisible(true);
     }

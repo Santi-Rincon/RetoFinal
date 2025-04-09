@@ -50,11 +50,11 @@ public class Report extends JFrame {
         centerPanel.add(statsPanel, BorderLayout.NORTH);
 
         // Tabla de detalles
-        String[] columns = {"Placa", "Entrada", "Salida", "Valor", "Recepcionista"};
+        String[] columns = { "Placa", "Entrada", "Salida", "Valor", "Recepcionista" };
         DefaultTableModel model = new DefaultTableModel(columns, 0);
 
         for (Ticket t : tickets) {
-            model.addRow(new Object[]{
+            model.addRow(new Object[] {
                     t.getPlate(),
                     t.getEntryTime(),
                     t.getDepartureTime() != null ? t.getDepartureTime() : "En curso",
@@ -83,7 +83,10 @@ public class Report extends JFrame {
         closeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         closeButton.setFocusPainted(false);
         closeButton.setPreferredSize(new Dimension(120, 40));
-        closeButton.addActionListener(e -> dispose());
+        closeButton.addActionListener(e -> {
+            dispose();
+            new AdminMenu();
+        });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
@@ -100,8 +103,7 @@ public class Report extends JFrame {
         card.setBackground(Color.WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
-                new EmptyBorder(15, 20, 15, 20)
-        ));
+                new EmptyBorder(15, 20, 15, 20)));
 
         JLabel titleLabel = new JLabel(title);
         titleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));

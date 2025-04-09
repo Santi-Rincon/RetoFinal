@@ -76,11 +76,13 @@ public class ReceptionistMenu extends JFrame {
 
 
         ingresarVehiculo.addActionListener(e -> {
-            
+            dispose();
+            new VehicularEntry();
         });
 
         salirVehiculo.addActionListener(e -> {
-            
+            dispose();
+            new VehicularExit();
         });
 
         verEspacios.addActionListener(e -> {
@@ -91,8 +93,9 @@ public class ReceptionistMenu extends JFrame {
 
         cerrarSesion.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Cerrando sesión...");
-            dispose(); // Cierra el menú del admin
-            new Login(); // Vuelve a mostrar el login
+            dispose();
+            new LogOut(); // Cierra el menú del admin
+            
         });
     }
 }

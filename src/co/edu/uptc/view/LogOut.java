@@ -2,12 +2,14 @@ package co.edu.uptc.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.border.EmptyBorder;
 
 public class LogOut extends JFrame {
 
     public LogOut() {
-        super("LogOut");
+        super("Cerrar Sesión");
         setSize(400, 250);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -38,6 +40,15 @@ public class LogOut extends JFrame {
         exitButton.setBorderPainted(false);
         exitButton.setPreferredSize(new Dimension(120, 40));
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Acción del botón para regresar al Login
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Cierra esta ventana
+                new Login(); // Abre la ventana de Login
+            }
+        });
 
         // Agregar componentes
         mainPanel.add(label1);
