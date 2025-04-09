@@ -63,7 +63,13 @@ public class GenerateTicket extends JFrame {
 
         // Acción del botón Imprimir: mostrar el pane
         btnImprimir.addActionListener(e -> {
-            Pane(); // <-- Aquí llamas al método que no estaba siendo ejecutado
+            Pane(); 
+        });
+
+        btnVolver.addActionListener(e -> {
+            JOptionPane.getRootFrame().dispose();
+            dispose();
+            new ReceptionistMenu();
         });
 
         buttonPanel.add(btnImprimir);

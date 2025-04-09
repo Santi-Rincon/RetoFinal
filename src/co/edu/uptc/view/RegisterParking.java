@@ -1,11 +1,10 @@
 package co.edu.uptc.view;
 
+import co.edu.uptc.model.Schedule;
+import co.edu.uptc.presenter.Presenter;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-import co.edu.uptc.model.Schedule;
-import co.edu.uptc.presenter.Presenter;
 
 public class RegisterParking extends JFrame {
 
@@ -145,7 +144,7 @@ public class RegisterParking extends JFrame {
 
             // Creamos un Schedule simple
             Schedule[] schedules = new Schedule[1];
-            schedules[0] = new Schedule(days, startHour, "6:00 PM"); // Puedes cambiar el final según lo desees
+            schedules[0] = new Schedule(days, startHour, "6:00 PM");
 
             // Llamamos al Presenter para registrar
             Presenter.getInstance().registerParking(name, address, spaces, schedules);

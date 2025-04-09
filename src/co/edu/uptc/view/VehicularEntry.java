@@ -7,12 +7,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -64,23 +62,19 @@ public class VehicularEntry extends JFrame {
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(Color.LIGHT_GRAY);
 
-        // Acción del botón Cancelar
-        btnCancelar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // Cierra esta ventana
-                new ReceptionistMenu(); // Abre el menú del recepcionista
-            }
+
+        btnAceptar.addActionListener(e -> {
+            JOptionPane.getRootFrame().dispose();
+            dispose();
+            new GenerateTicket();
         });
 
-        btnAceptar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // Cierra esta ventana
-                new GenerateTicket
-                (); // Abre el menú del recepcionista
-            }
+        btnCancelar.addActionListener(e -> {
+            JOptionPane.getRootFrame().dispose();
+            dispose();
+            new ReceptionistMenu();
         });
+
 
         buttonPanel.add(btnAceptar);
         buttonPanel.add(btnCancelar);
