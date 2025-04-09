@@ -13,7 +13,7 @@ public class Admin extends User {
     }
 
     public void registerParking(String name, String address, int totalSpaces, Schedule[] schedule) {
-        Parking parking = new Parking(name, address, totalSpaces, schedule);
+        
         JOptionPane.showMessageDialog(null, "Parqueadero registrado: " + name);
     }
 

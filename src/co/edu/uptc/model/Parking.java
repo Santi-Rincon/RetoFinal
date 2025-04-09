@@ -2,13 +2,12 @@ package co.edu.uptc.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.swing.JOptionPane;
 
 public class Parking {
+    private static Parking instance;
+
     private String name;
     private String address;
     private int totalSpaces;
@@ -18,11 +17,27 @@ public class Parking {
     private Map<String, Ticket> parkedVehicles = new HashMap<>();
     private Recepcionist recepcionist;
 
-    public Parking(String name, String address, int totalSpaces, Schedule[] schedule) {
+    private Parking(String name, String address, int totalSpaces, Schedule[] schedule) {
         this.name = name;
         this.address = address;
         this.totalSpaces = totalSpaces;
         this.schedule = schedule;
+    }
+
+    // Método para obtener la instancia única
+    public static Parking getInstance(String name, String address, int totalSpaces, Schedule[] schedule) {
+        if (instance == null) {
+            instance = new Parking(name, address, totalSpaces, schedule);
+        }
+        return instance;
+    }
+
+    // Método adicional para obtener la instancia ya creada (sin parámetros)
+    public static Parking getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("Parking aún no ha sido inicializado.");
+        }
+        return instance;
     }
 
     public String createSchedules() {
@@ -30,8 +45,7 @@ public class Parking {
         schedules[0] = new Schedule("Lunes a Viernes", "08:00", "18:00");
         schedules[1] = new Schedule("Sábado", "08:00", "12:00");
         schedules[2] = new Schedule("Domingos y festivos", "08:00", "18:00");
-
-        return schedules.toString();
+        return Arrays.toString(schedules);
     }
 
     public List<Ticket> getTicketsDelDia(LocalDate fecha) {
@@ -43,7 +57,6 @@ public class Parking {
         }
         return delDia;
     }
-    
 
     public int getEspaciosDisponibles() {
         return totalSpaces - occupiedSpaces;
@@ -52,7 +65,6 @@ public class Parking {
     public Ticket getTicketPorPlaca(String plate) {
         return parkedVehicles.get(plate);
     }
-    
 
     public void addTicket(Ticket ticket) {
         tickets.add(new Ticket(LocalDateTime.now(), recepcionist.fullName(), ticket.getPlate()));
@@ -100,5 +112,4 @@ public class Parking {
                     "Número de vehículos: " + entry.getValue()[1].intValue());
         }
     }
-
 }

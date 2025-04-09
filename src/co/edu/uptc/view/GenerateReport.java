@@ -1,29 +1,28 @@
 package co.edu.uptc.view;
 
 import co.edu.uptc.model.Parking;
-import co.edu.uptc.presenter.Presenter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import javax.swing.border.EmptyBorder;
 
 public class GenerateReport extends JFrame {
+
+    private JTextField dateField;
 
     public GenerateReport() {
         super("Generar Reporte");
         setSize(500, 250);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Mejor usar DISPOSE
 
         JPanel contentPanel = new JPanel(new BorderLayout());
 
         // Panel de título
         JPanel titlePanel = new JPanel();
-        titlePanel.setBorder(new EmptyBorder(30, 10, 20, 10));
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(30, 10, 20, 10));
 
         JLabel titleLabel = new JLabel("Digite la fecha de la que desea el reporte (yyyy-MM-dd):");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -50,7 +49,7 @@ public class GenerateReport extends JFrame {
         formPanel.add(dateLabel, gbc);
 
         // Campo de texto para la fecha
-        JTextField dateField = new JTextField(15);
+        dateField = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 0.7;
@@ -77,28 +76,25 @@ public class GenerateReport extends JFrame {
         add(contentPanel);
 
         // Acción al presionar el botón
-        generateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String fechaTexto = dateField.getText().trim();
-                if (fechaTexto.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Por favor ingrese una fecha.", "Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
+        generateButton.addActionListener((ActionEvent e) -> {
+            String inputDate = dateField.getText().trim();
+            if (inputDate.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese una fecha.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-                try {
-                    LocalDate fecha = LocalDate.parse("2025-04-08"); // yyyy-MM-dd
-                    Parking parking = Presenter.getInstance().getParking();
+            try {
+                LocalDate fecha = LocalDate.parse(inputDate); // Formato correcto yyyy-MM-dd
 
-                    if (parking != null) {
-                        new Report(fecha, parking);
-                        dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No hay un parqueadero registrado.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (DateTimeParseException ex) {
-                    JOptionPane.showMessageDialog(null, "Formato de fecha incorrecto. Use yyyy-MM-dd", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                // Obtener instancia única de Parking (ya creada en MainApp)
+                Parking parking = Parking.getInstance();
+
+                // Abrir la ventana de reporte
+                new Report(fecha, parking);
+                dispose(); // Cierra esta ventana
+
+            } catch (DateTimeParseException ex) {
+                JOptionPane.showMessageDialog(null, "Formato de fecha incorrecto. Use yyyy-MM-dd", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
