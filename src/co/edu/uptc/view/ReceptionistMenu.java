@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -26,27 +28,36 @@ public class ReceptionistMenu extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setPreferredSize(new Dimension(0, 25)); // Aumenta la altura del menú (por defecto es como 25)
     
-        JMenu menuIngreso = new JMenu("Ingreso de Vehículo");
-        JMenu menuSalida = new JMenu("Salida de Vehículo");
+        JMenu menuIngreso = new JMenu("Vehículo");
+        JMenuItem ingresarVehiculo = new JMenuItem("Ingresar Vehículo");
+        JMenuItem salirVehiculo = new JMenuItem("Salida Vehículo");
+        menuIngreso.add(ingresarVehiculo);
+        menuIngreso.add(salirVehiculo);
+
+
         JMenu menuEspacios = new JMenu("Espacios Disponibles");
-        JMenu menuCerrar = new JMenu("Cerrar Sesión");
+        JMenuItem verEspacios = new JMenuItem("Ver Espacios Disponibles");
+        menuEspacios.add(verEspacios);
+
+        JMenu menuCerrar = new JMenu("Cuenta");
+        JMenuItem cerrarSesion = new JMenuItem("Cerrar Sesión");
+        menuCerrar.add(cerrarSesion);
     
-        // Puedes aumentar también la fuente de los ítems para que se vea más grande
-        Font menuFont = new Font("Arial", Font.PLAIN, 16);
+
+        Font menuFont = new Font("Arial", Font.BOLD, 14);
         menuIngreso.setFont(menuFont);
-        menuSalida.setFont(menuFont);
         menuEspacios.setFont(menuFont);
         menuCerrar.setFont(menuFont);
+        ingresarVehiculo.setFont(menuFont);
+        salirVehiculo.setFont(menuFont);
+        verEspacios.setFont(menuFont);
+        cerrarSesion.setFont(menuFont);
     
         menuBar.add(menuIngreso);
-        menuBar.add(menuSalida);
         menuBar.add(menuEspacios);
         menuBar.add(menuCerrar);
     
-        // Panel contenedor del menú
-        JPanel menuPanel = new JPanel(new BorderLayout());
-        menuPanel.add(menuBar, BorderLayout.CENTER);
-        add(menuPanel, BorderLayout.NORTH);
+        setJMenuBar(menuBar);
     
         // Panel central con mensaje
         JPanel panel = new JPanel(new GridBagLayout());
@@ -62,6 +73,19 @@ public class ReceptionistMenu extends JFrame {
     
         add(panel, BorderLayout.CENTER);
         setVisible(true);
+
+        
+
+
+
+
+
+
+        cerrarSesion.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "Cerrando sesión...");
+            dispose(); // Cierra el menú del admin
+            new Login(); // Vuelve a mostrar el login
+        });
     }
 }
  

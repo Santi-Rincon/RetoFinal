@@ -45,6 +45,17 @@ public class AdminMenu extends JFrame {
         JMenuItem cerrarSesion = new JMenuItem("Cerrar Sesión");
         menuCerrar.add(cerrarSesion);
 
+        Font menuFont = new Font("Arial", Font.BOLD, 14);
+        menuIngreso.setFont(menuFont);
+        menuRecepcionista.setFont(menuFont);
+        generateReport.setFont(menuFont);
+        menuCerrar.setFont(menuFont);
+        registrarParqueadero.setFont(menuFont);
+        crearRecepcionista.setFont(menuFont);
+        editarRecepcionista.setFont(menuFont);
+        generarReporte.setFont(menuFont);
+        cerrarSesion.setFont(menuFont);
+
         // Agregar menús a la barra
         menuBar.add(menuIngreso);
         menuBar.add(menuRecepcionista);
