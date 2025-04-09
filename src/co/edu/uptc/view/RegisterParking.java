@@ -2,6 +2,7 @@ package co.edu.uptc.view;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class RegisterParking extends JFrame {
 
@@ -13,6 +14,29 @@ public class RegisterParking extends JFrame {
 
         JPanel contentPanel = new JPanel(new BorderLayout());
 
+        JPanel titlePanel = new JPanel(new BorderLayout());
+        titlePanel.setBorder(new EmptyBorder(30, 10, 20, 10));
+
+        JButton backButton = new JButton("← Volver");
+        backButton.setFont(new Font("Arial", Font.BOLD, 12));
+        backButton.setBackground(Color.LIGHT_GRAY);
+        backButton.setOpaque(true);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.addActionListener(e -> {
+            dispose();
+            new AdminMenu();
+        });
+        
+        titlePanel.add(backButton, BorderLayout.WEST);
+
+        JLabel titleLabel = new JLabel("Digite los siguientes datos para registrar un parqueadero:");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titlePanel.add(titleLabel, BorderLayout.CENTER);
+
+
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 20, 10, 20);
@@ -21,7 +45,7 @@ public class RegisterParking extends JFrame {
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
 
-        // Fila 0: Nombre Parqueadero
+
         JLabel parkingName = new JLabel("Nombre Parqueadero:");
         parkingName.setFont(labelFont);
         gbc.gridx = 0;
@@ -77,7 +101,6 @@ public class RegisterParking extends JFrame {
         gbc.weightx = 0.7;
         formPanel.add(openingHoursCombo, gbc);
 
-        // Fila 4: Hora de Inicio
         JLabel initialHours = new JLabel("Hora De Inicio:");
         initialHours.setFont(labelFont);
         gbc.gridx = 0;
@@ -91,7 +114,6 @@ public class RegisterParking extends JFrame {
         gbc.weightx = 0.7;
         formPanel.add(initialHoursCombo, gbc);
 
-        // Fila 5: Botón Registrar
         JButton registerButton = new JButton("Registrar");
         registerButton.setFont(new Font("Arial", Font.BOLD, 14));
         registerButton.setBackground(Color.LIGHT_GRAY);
@@ -102,12 +124,13 @@ public class RegisterParking extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         formPanel.add(registerButton, gbc);
+     
 
-        // Acción del botón
         registerButton.addActionListener(e -> {
             showConfirmationPane();
         });
 
+        contentPanel.add(titlePanel, BorderLayout.NORTH);
         contentPanel.add(formPanel, BorderLayout.CENTER);
         add(contentPanel);
         setVisible(true);
@@ -133,18 +156,25 @@ public class RegisterParking extends JFrame {
         panel.add(messageLabel);
         panel.add(Box.createVerticalStrut(10));
 
-        Object[] options = { createButton("Aceptar") };
+        JButton acceptButton = createButton("Aceptar");
 
-        JOptionPane.showOptionDialog(
-            this,
-            panel,
-            "",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            options,
-            options[0]
-        );
+            acceptButton.addActionListener(e -> {
+                JOptionPane.getRootFrame().dispose(); 
+                dispose();
+                new RegisterParking();
+            });
+
+            Object[] options = { acceptButton };
+
+            JOptionPane.showOptionDialog(
+                this,
+                panel,
+                "Confirmación",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                options[0]);
     }
 
     private static JButton createButton(String text) {
@@ -155,4 +185,5 @@ public class RegisterParking extends JFrame {
         button.setBorderPainted(false);
         return button;
     }
+
 }
