@@ -1,23 +1,26 @@
 package co.edu.uptc.presenter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import co.edu.uptc.model.Admin;
 import co.edu.uptc.model.Parking;
+import co.edu.uptc.model.Recepcionist;
 import co.edu.uptc.model.Schedule;
 import co.edu.uptc.model.Ticket;
 import co.edu.uptc.model.User;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Presenter {
     private static Presenter presenter;
     private Parking modelParking;
     private Admin admin = new Admin();
+    private Recepcionist recepcionist = new Recepcionist();
 
     private Presenter() {
         // Crea un usuario administrador por defecto
         new Admin("1", "1");
         System.out.println("Usuario administrador creado en Presenter!");
+        new Recepcionist("2", "2", "2", "2", "2", "2", "2");
+        System.out.println("Usuario recepcionista creado en Presenter!");
     }
 
     public static Presenter getInstance() {

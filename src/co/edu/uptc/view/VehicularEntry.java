@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class VehicularEntry extends JFrame {
-
+    private static int numeroRecibo = 1; 
     public VehicularEntry() {
         super("Ingreso de Vehículo");
         setSize(800, 600);
@@ -62,11 +62,14 @@ public class VehicularEntry extends JFrame {
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.setBackground(Color.LIGHT_GRAY);
 
+        
 
         btnAceptar.addActionListener(e -> {
             JOptionPane.getRootFrame().dispose();
             dispose();
-            new GenerateTicket();
+            new GenerateTicket(placaField.getText().toUpperCase(), numeroRecibo);
+            numeroRecibo++;
+
         });
 
         btnCancelar.addActionListener(e -> {

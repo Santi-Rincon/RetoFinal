@@ -6,7 +6,8 @@ import javax.swing.text.*;
 
 public class GenerateTicket extends JFrame {
 
-    public GenerateTicket() {
+    
+    public GenerateTicket(String plate, int numeroRecibo) {
         super("Generar Ticket");
         setSize(800, 600);
         setLocationRelativeTo(null);
@@ -35,8 +36,9 @@ public class GenerateTicket extends JFrame {
                 "Avenida Central del Norte 39-115. Tunja, Boyacá.\n\n" +
                 "Fecha de ingreso: DD/MM/AAAA\n" +
                 "Hora de ingreso: hh:mm:ss\n\n" +
-                "Recibo No. ###\n" +
-                "Placa: ###-###", centerStyle);
+                "Recibo No. " + numeroRecibo + "\n" +
+                "Placa: "+ plate.toUpperCase(), centerStyle);
+                
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
@@ -111,9 +113,9 @@ public class GenerateTicket extends JFrame {
         };
 
         int result = JOptionPane.showOptionDialog(
-                this,  // usar `this` para centrarlo en el frame actual
+                this,  
                 panel,
-                "", // Título del cuadro
+                "", 
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.PLAIN_MESSAGE,
                 null,
@@ -123,8 +125,13 @@ public class GenerateTicket extends JFrame {
 
         if (result == 0) {
             System.out.println("Aceptar presionado");
+            dispose();
+            new VehicularEntry().setVisible(true);
+
         } else if (result == 1) {
             System.out.println("Cancelar presionado");
+            dispose();
+            new ReceptionistMenu().setVisible(true);
         }
     }
 

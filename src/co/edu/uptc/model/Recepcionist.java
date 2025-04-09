@@ -12,8 +12,8 @@ public class Recepcionist extends User {
     private String password;
     private String username;
 
-
     public Recepcionist() {}
+    
     public Recepcionist(String user, String name, String lastname, String phone, String address,String email, String password) {
         super(user, password);
         this.name = name;

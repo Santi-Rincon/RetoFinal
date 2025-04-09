@@ -1,12 +1,11 @@
 package co.edu.uptc.view;
 
 import co.edu.uptc.model.Parking;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import javax.swing.*;
 
 public class GenerateReport extends JFrame {
 
