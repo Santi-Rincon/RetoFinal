@@ -74,11 +74,19 @@ public class ReceptionistMenu extends JFrame {
         add(panel, BorderLayout.CENTER);
         setVisible(true);
 
-        
 
+        ingresarVehiculo.addActionListener(e -> {
+            
+        });
 
+        salirVehiculo.addActionListener(e -> {
+            
+        });
 
-
+        verEspacios.addActionListener(e -> {
+            dispose();
+            new AvailableSpaces(); 
+        });
 
 
         cerrarSesion.addActionListener(e -> {
