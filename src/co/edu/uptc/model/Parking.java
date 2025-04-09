@@ -34,9 +34,25 @@ public class Parking {
         return schedules.toString();
     }
 
+    public List<Ticket> getTicketsDelDia(LocalDate fecha) {
+        List<Ticket> delDia = new ArrayList<>();
+        for (Ticket ticket : tickets) {
+            if (ticket.getEntryTime().toLocalDate().equals(fecha)) {
+                delDia.add(ticket);
+            }
+        }
+        return delDia;
+    }
+    
+
     public int getEspaciosDisponibles() {
         return totalSpaces - occupiedSpaces;
     }
+
+    public Ticket getTicketPorPlaca(String plate) {
+        return parkedVehicles.get(plate);
+    }
+    
 
     public void addTicket(Ticket ticket) {
         tickets.add(new Ticket(LocalDateTime.now(), recepcionist.fullName(), ticket.getPlate()));

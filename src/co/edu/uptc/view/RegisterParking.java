@@ -4,6 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import co.edu.uptc.model.Schedule;
+import co.edu.uptc.presenter.Presenter;
+
 public class RegisterParking extends JFrame {
 
     public RegisterParking() {
@@ -28,14 +31,13 @@ public class RegisterParking extends JFrame {
             dispose();
             new AdminMenu();
         });
-        
+
         titlePanel.add(backButton, BorderLayout.WEST);
 
         JLabel titleLabel = new JLabel("Digite los siguientes datos para registrar un parqueadero:");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titlePanel.add(titleLabel, BorderLayout.CENTER);
-
 
         JPanel formPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -44,7 +46,6 @@ public class RegisterParking extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
 
         Font labelFont = new Font("Arial", Font.BOLD, 14);
-
 
         JLabel parkingName = new JLabel("Nombre Parqueadero:");
         parkingName.setFont(labelFont);
@@ -95,7 +96,8 @@ public class RegisterParking extends JFrame {
         gbc.weightx = 0.3;
         formPanel.add(openingHours, gbc);
 
-        JComboBox<String> openingHoursCombo = new JComboBox<>(new String[]{"Lunes a Viernes", "Fines de semana", "Todos los días"});
+        JComboBox<String> openingHoursCombo = new JComboBox<>(
+                new String[] { "Lunes a Viernes", "Fines de semana", "Todos los días" });
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.weightx = 0.7;
@@ -108,7 +110,8 @@ public class RegisterParking extends JFrame {
         gbc.weightx = 0.3;
         formPanel.add(initialHours, gbc);
 
-        JComboBox<String> initialHoursCombo = new JComboBox<>(new String[]{"6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM"});
+        JComboBox<String> initialHoursCombo = new JComboBox<>(
+                new String[] { "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM" });
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.weightx = 0.7;
@@ -124,10 +127,30 @@ public class RegisterParking extends JFrame {
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         formPanel.add(registerButton, gbc);
-     
 
         registerButton.addActionListener(e -> {
-            showConfirmationPane();
+            String name = parkingText.getText();
+            String address = directionText.getText();
+            int spaces;
+
+            try {
+                spaces = Integer.parseInt(availableSpacesText.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese un número válido en 'Espacios Disponibles'.");
+                return;
+            }
+
+            String days = (String) openingHoursCombo.getSelectedItem();
+            String startHour = (String) initialHoursCombo.getSelectedItem();
+
+            // Creamos un Schedule simple
+            Schedule[] schedules = new Schedule[1];
+            schedules[0] = new Schedule(days, startHour, "6:00 PM"); // Puedes cambiar el final según lo desees
+
+            // Llamamos al Presenter para registrar
+            Presenter.getInstance().registerParking(name, address, spaces, schedules);
+
+            showConfirmationPane(); // Muestra confirmación y reinicia ventana
         });
 
         contentPanel.add(titlePanel, BorderLayout.NORTH);
@@ -158,15 +181,15 @@ public class RegisterParking extends JFrame {
 
         JButton acceptButton = createButton("Aceptar");
 
-            acceptButton.addActionListener(e -> {
-                JOptionPane.getRootFrame().dispose(); 
-                dispose();
-                new RegisterParking();
-            });
+        acceptButton.addActionListener(e -> {
+            JOptionPane.getRootFrame().dispose();
+            dispose();
+            new RegisterParking();
+        });
 
-            Object[] options = { acceptButton };
+        Object[] options = { acceptButton };
 
-            JOptionPane.showOptionDialog(
+        JOptionPane.showOptionDialog(
                 this,
                 panel,
                 "Confirmación",

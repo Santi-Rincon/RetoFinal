@@ -1,7 +1,12 @@
 package co.edu.uptc.presenter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import co.edu.uptc.model.Admin;
 import co.edu.uptc.model.Parking;
+import co.edu.uptc.model.Schedule;
+import co.edu.uptc.model.Ticket;
 import co.edu.uptc.model.User;
 
 public class Presenter {
@@ -48,6 +53,36 @@ public class Presenter {
     // En clase Presenter.java
     public boolean modifyRecepcionistCredentials(String user, String newPassword) {
         return admin.changeRecepcionistCredentials(user, newPassword);
+    }
+
+    public void registerParking(String name, String address, int spaces, Schedule[] schedule) {
+        admin.registerParking(name, address, spaces, schedule);
+    }
+
+    public Parking getParking() {
+        return modelParking;
+    }
+
+    public boolean registrarEntrada(String placa, String recepcionista) {
+        if (modelParking.getEspaciosDisponibles() <= 0) {
+            return false;
+        }
+        Ticket ticket = new Ticket(LocalDateTime.now(), recepcionista, placa);
+        modelParking.addTicket(ticket);
+        return true;
+    }
+
+    public boolean registrarSalida(String placa, double pago) {
+        Ticket ticket = modelParking.getTicketPorPlaca(placa);
+        if (ticket == null) {
+            return false;
+        }
+        modelParking.checkOut(placa, LocalDateTime.now(), pago);
+        return true;
+    }
+
+    public void generarReporteDelDia(LocalDate fecha) {
+        modelParking.generateSalesReport(fecha);
     }
 
 }

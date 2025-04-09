@@ -94,7 +94,10 @@ public class AdminMenu extends JFrame {
             new ModifyReceptionist(); // Abre la ventana de creación
         });
 
-        generarReporte.addActionListener(e -> JOptionPane.showMessageDialog(this, "Generando reporte..."));
+        generarReporte.addActionListener(e -> {
+            dispose(); // Cierra el menú del admin
+            new GenerateReport(); // Abre la ventana de creación
+        });
 
         cerrarSesion.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Cerrando sesión...");

@@ -20,7 +20,7 @@ public class Admin extends User {
     public void createRecepcionist(String user, String name, String lastname, String phone, String address,
             String email, String password) {
         User recepcionist = new Recepcionist(user, name, lastname, phone, address, email, password);
-        JOptionPane.showMessageDialog(null, "Recepcionista registrado: " + recepcionist.getUsername());
+        JOptionPane.showMessageDialog(null, "Recepcionista registrado: " + user);
     }
 
     // En clase Admin.java
