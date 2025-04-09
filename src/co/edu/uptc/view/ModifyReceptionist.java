@@ -10,11 +10,14 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import co.edu.uptc.presenter.Presenter;
 
 public class ModifyReceptionist extends JFrame {
 
@@ -86,9 +89,9 @@ public class ModifyReceptionist extends JFrame {
 
         // Advertencia (fila 3)
         JLabel warningLabel = new JLabel("<html><div style='text-align: center;'>"
-            + "Tenga en cuenta que la nueva contraseña no debe ser repetida,<br>"
-            + "ni tener caracteres especiales y debe ser de 8 dígitos."
-            + "</div></html>");
+                + "Tenga en cuenta que la nueva contraseña no debe ser repetida,<br>"
+                + "ni tener caracteres especiales y debe ser de 8 dígitos."
+                + "</div></html>");
         warningLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         warningLabel.setForeground(Color.DARK_GRAY);
         warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -114,6 +117,34 @@ public class ModifyReceptionist extends JFrame {
         contentPanel.add(formPanel, BorderLayout.CENTER);
         add(contentPanel);
         setVisible(true);
+
+        modifyButton.addActionListener(e -> {
+            String cc = ccField.getText().trim();
+            String newPass = new String(newPassField.getPassword()).trim();
+            String repeatPass = new String(repeatPassField.getPassword()).trim();
+
+            // Validación de campos
+            if (cc.isEmpty() || newPass.isEmpty() || repeatPass.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
+                return;
+            }
+
+            if (!newPass.equals(repeatPass)) {
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden.");
+                return;
+            }
+
+            boolean success = Presenter.getInstance().modifyRecepcionistCredentials(cc, newPass);
+
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Contraseña modificada con éxito.");
+                dispose();
+                new AdminMenu();
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario no encontrado. No se pudo modificar la contraseña.");
+            }
+        });
+
     }
 
 }

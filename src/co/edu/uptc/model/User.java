@@ -10,6 +10,7 @@ public class User {
     private static List<User> registeredUsers = new ArrayList<>();
 
     public User() {}
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -18,11 +19,10 @@ public class User {
         if (!userExists(username)) {
             registeredUsers.add(this);
         } else {
-            JOptionPane.showMessageDialog(null, "The username '" + username + "' already exists.");
+            JOptionPane.showMessageDialog(null, "El nombre de usuario '" + username + "' ya existe.");
         }
     }
 
-    
     public static boolean userExists(String username) {
         for (User u : registeredUsers) {
             if (u.username.equalsIgnoreCase(username)) {
@@ -32,7 +32,6 @@ public class User {
         return false;
     }
 
-    
     public static String getUserType(String username) {
         for (User u : registeredUsers) {
             if (u.username.equalsIgnoreCase(username)) {
@@ -41,7 +40,7 @@ public class User {
         }
         return "Not found";
     }
-    
+
     public static boolean login(String username, String password) {
         for (User u : registeredUsers) {
             if (u.username.equals(username) && u.password.equals(password)) {
@@ -51,12 +50,11 @@ public class User {
         return false;
     }
 
-    
     public void logout() {
-        JOptionPane.showMessageDialog(null, "Session closed for user: " + username);
+        JOptionPane.showMessageDialog(null, "Sesión cerrada para el usuario: " + username);
     }
 
-    // Getters y setters
+    // Getters y Setters
 
     public String getUsername() {
         return this.username;
@@ -74,11 +72,12 @@ public class User {
         this.password = password;
     }
 
-    public List<User> getRegisteredUsers() {
-        return this.registeredUsers;
+    // Métodos estáticos para acceder/modificar la lista de usuarios registrados
+    public static List<User> getRegisteredUsers() {
+        return registeredUsers;
     }
 
-    public void setRegisteredUsers(List<User> registeredUsers) {
-        this.registeredUsers = registeredUsers;
+    public static void setRegisteredUsers(List<User> users) {
+        registeredUsers = users;
     }
 }

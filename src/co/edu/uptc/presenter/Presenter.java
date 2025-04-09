@@ -45,4 +45,9 @@ public class Presenter {
         return true;
     }
 
+    // En clase Presenter.java
+    public boolean modifyRecepcionistCredentials(String user, String newPassword) {
+        return admin.changeRecepcionistCredentials(user, newPassword);
+    }
+
 }
