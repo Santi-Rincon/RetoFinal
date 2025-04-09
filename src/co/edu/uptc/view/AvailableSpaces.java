@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -24,7 +24,7 @@ public class AvailableSpaces extends JFrame {
 
         // Panel para el mensaje
         JPanel labelPanel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel("Los Espacios Disponibles son:", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Los Espacios Disponibles son:" , SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         labelPanel.add(titleLabel, BorderLayout.CENTER);
 
@@ -42,6 +42,17 @@ public class AvailableSpaces extends JFrame {
         buttonPanel.add(btnAceptar);
         buttonPanel.add(btnVolver);
 
+        btnAceptar.addActionListener(e -> {
+            JOptionPane.getRootFrame().dispose(); 
+            dispose();
+            new AvailableSpaces();
+        });
+
+        btnVolver.addActionListener(e -> {
+            dispose();
+            new ReceptionistMenu();
+        });
+
         // Agregar subpaneles al panel general
         generalPanel.add(labelPanel, BorderLayout.CENTER);
         generalPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -49,5 +60,7 @@ public class AvailableSpaces extends JFrame {
         // Agregar el panel general al JFrame
         add(generalPanel);
         setVisible(true);
+
     }
+
 }
